@@ -1,0 +1,32 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Your Shopping Cart{% endblock %}
+
+{% block content %}
+<div class="w-3/4 my-6 p-6 mx-auto bg-gray-100 rounded-xl grid grid-cols-5">
+    <div class="col-span-5">
+        <h1 class="mb-6 text-3xl text-center">Your Shopping Cart</h1>
+    </div>
+    {% for item in cart_items %}
+    <div class="col-span-2 p-6">
+        <img src="{{ item.item.image.url }}" class="rounded-xl">
+    </div>
+    <div class="col-span-3 p-6 bg-gray-100 rounded-xl">
+        <p class="700"><strong class="text-gray">{{ item.item.name }} ({{ item.quantity }})</strong></p>
+        <p class="text-gray-500"><strong>Price: </strong>${{ item.item.price }}</p>
+        <a href="{% url 'item:remove_from_cart' item.id %}">Remove</a>
+    </div>
+    {% empty %}
+    <p>Your cart is empty.</p>
+    {% endfor %}
+    <div class="col-span-5">
+        <p class="700"><strong class="text-gray">Total Price: ${{ total_price }}</strong></p>
+    </div>
+    <div class="col-span-5">
+        <form method="post" action="{% url 'order:payment_page' %}">
+            {% csrf_token %}
+            <button type="submit" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Proceed to Payment</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'core/base.html' %}
+{% block title %}Your Orders{% endblock %}
+{% block content %}
+<div class="container mx-auto mt-8">
+    <h1 class="text-3xl font-bold mb-4">Your Orders</h1>
+    <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        {% if order_items %}
+            {% for order_item in order_items %}
+                <div class="bg-white shadow-md rounded-lg p-6">
+                    <h2 class="text-lg font-semibold mb-2">Order ID: {{ order_item.order.id }}</h2>
+                    <p class="text-gray-600 mb-4">Total: ${{ order_item.order.payment.amount }}</p>
+                    <ul>
+                        {% for item in order_item.items %}
+                            <li>{{ item.quantity }} x {{ item.item.name }} - ${{ item.item.price }}</li>
+                        {% endfor %}
+                    </ul>
+                    <form method="post" class="mt-4">
+                        {% csrf_token %}
+                        <input type="hidden" name="order_id" value="{{ order_item.order.id }}">
+                        <button class="py-2 px-4 bg-red-500 text-white rounded hover:bg-red-600" type="submit" name="delete_order">Delete</button>
+                    </form>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-gray-600">You haven't placed any orders yet.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

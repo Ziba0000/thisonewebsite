@@ -1,14 +1,14 @@
-from django.contrib.auth import views as auth_views
-from django.urls import path
+from django.urls import path, include
 
 from . import views
-from . forms import LoginForm
 
 app_name = 'core'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('contact/', views.contact, name='contact'),
+    path('items/', include('item.urls')),
     path('signup/', views.signup, name='signup'),
-    path('login/', auth_views.LoginView.as_view(template_name='core/login.html', authentication_form=LoginForm), name='login')
+    path('order/', include('order.urls')),
+    path('login/', views.login_user, name='login'),
+    path('logout/', views.custom_logout, name='logout'),
 ]

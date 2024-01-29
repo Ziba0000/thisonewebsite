@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 
 class LoginForm(AuthenticationForm):
@@ -21,7 +21,7 @@ class SignUpForm(UserCreationForm):
 
     username = forms.CharField(widget=forms.TextInput(attrs={
         'placeholder': 'Your username',
-        'class' : 'w-full py-4 px-6 rounded-xl'
+        'class': 'w-full py-4 px-6 rounded-xl'
     }))
 
     email = forms.CharField(widget=forms.EmailInput(attrs={

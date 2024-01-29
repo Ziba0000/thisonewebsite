@@ -1,0 +1,26 @@
+{% extends 'core/base.html' %}
+{% block title %}Payment{% endblock %}
+{% block content %}
+<div class="container mx-auto mt-8">
+    <div class="max-w-md mx-auto bg-white shadow-md rounded-lg p-6">
+        <h1 class="text-3xl font-bold mb-4 text-center">Payment</h1>
+        <p class="text-lg mb-4">Total Amount: ${{ total_price }}</p>
+        <form action="{% url 'order:process_payment' %}" method="post" class="space-y-4">
+            {% csrf_token %}
+            <div class="flex flex-col space-y-2">
+                <label for="card_number" class="text-sm">Card Number</label>
+                <input type="text" id="card_number" name="card_number" required class="p-2 border rounded focus:outline-none focus:border-blue-500">
+            </div>
+            <div class="flex flex-col space-y-2">
+                <label for="expiry_date" class="text-sm">Expiry Date</label>
+                <input type="text" id="expiry_date" name="expiry_date" required class="p-2 border rounded focus:outline-none focus:border-blue-500">
+            </div>
+            <div class="flex flex-col space-y-2">
+                <label for="cvv" class="text-sm">CVV</label>
+                <input type="text" id="cvv" name="cvv" required class="p-2 border rounded focus:outline-none focus:border-blue-500">
+            </div>
+            <button type="submit" class="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600">Pay Now</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
